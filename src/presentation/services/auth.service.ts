@@ -1,5 +1,5 @@
 import { UserModel } from "../../data";
-import { CustomError, RegisterUserDto, UserEntity } from "../../domain";
+import { CustomError, LoginUserDto, RegisterUserDto, UserEntity } from "../../domain";
 import { bcryptAdpater } from '../../config/bcrypt.adapter';
 
 export class AuthService {
@@ -33,6 +33,23 @@ export class AuthService {
 			}
 		} catch (error) {
 			return CustomError.internalServer(`${error}`)
+		}
+	}
+
+	loginUser = async (dto: LoginUserDto) => {
+		const user = await UserModel.findOne({ email: dto.email })
+
+		if (!user) throw CustomError.unauthorized('Invalid credentials')
+
+		const isValidPassword = bcryptAdpater.compare(dto.password, user.password)
+
+		if (!isValidPassword) throw CustomError.unauthorized('Invalid credentials')
+
+		const { password, ...rest } = UserEntity.fromObject(user)
+
+		return {
+			user: rest,
+			token: 'ABC'
 		}
 	}
 }
