@@ -24,13 +24,15 @@ export class AuthService {
 
 			const { password, ...rest } = UserEntity.fromObject(user)
 
-			// JWT - para maneter la auth del usuario
+			const token = await JwtAdapter.generateToken({ id: user.id })
+
+			if (!token) throw CustomError.internalServer('Error generating token')
 
 			// Send confirmation email
 
 			return {
 				user: rest,
-				token: 'ABC'
+				token: token
 			}
 		} catch (error) {
 			return CustomError.internalServer(`${error}`)
