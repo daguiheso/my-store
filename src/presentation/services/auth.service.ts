@@ -32,7 +32,7 @@ export class AuthService {
 
 			if (!token) throw CustomError.internalServer('Error generating token')
 
-			const wasSendEmail = await this.sendEmailValidationLink(dto.email)
+			await this.sendEmailValidationLink(dto.email)
 
 			return {
 				user: rest,
@@ -62,6 +62,23 @@ export class AuthService {
 			user: rest,
 			token: token
 		}
+	}
+
+	validateEmail = async (token: string) => {
+
+		const payload = await JwtAdapter.validateToken(token)
+		if (!payload) throw CustomError.unauthorized('Invalid token')
+
+		const { email } = payload as { email: string }
+		if (!email) throw CustomError.internalServer('Email not in token')
+
+		const user = await UserModel.findOne({ email: email })
+		if (!user) throw CustomError.internalServer('Email not exist')
+
+		user.emailValidated = true
+		await user.save()
+
+		return true
 	}
 
 	private sendEmailValidationLink = async (email: string) => {
