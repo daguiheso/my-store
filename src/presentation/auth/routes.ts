@@ -1,12 +1,12 @@
 import { envs } from './../../config/envs';
 import { Router } from 'express';
 import { AuthController } from './controller';
-import { AuthService } from '../services/auth.service';
 import { EmailService } from '../services/email.service';
+import { MongoDatasource } from '../../infrastructure/datasources/mongo.datasource';
+import { AuthRepositoryImpl } from '../../infrastructure/repositories/auth.repository.impl';
 
 
  export class AuthRoutes {
-
 
  	static get routes(): Router {
 
@@ -18,9 +18,10 @@ import { EmailService } from '../services/email.service';
 			envs.MAILER_SECRET_KEY
 		)
 
-		const authService = new AuthService(emailService)
+		const authDatasource = new MongoDatasource(emailService)
+		const authRepository = new AuthRepositoryImpl(authDatasource)
 
- 		const controller = new AuthController(authService)
+ 		const controller = new AuthController(authRepository)
 
  		router.post('/login', controller.loginUser);
  		router.post('/register', controller.registerUser);
