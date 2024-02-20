@@ -69,10 +69,10 @@ export class MongoDatasource implements AuthDatasource {
 
 	async validateEmail(token: string): Promise<boolean | CustomError> {
 
-		const payload = await JwtAdapter.validateToken(token)
+		const payload = await JwtAdapter.validateToken<{ email: string }>(token)
 		if (!payload) throw CustomError.unauthorized('Invalid token')
 
-		const { email } = payload as { email: string }
+		const { email } = payload
 		if (!email) throw CustomError.internalServer('Email not in token')
 
 		const user = await UserModel.findOne({ email: email })
