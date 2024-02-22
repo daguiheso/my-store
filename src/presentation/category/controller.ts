@@ -4,7 +4,8 @@ import {
 	CreateCategory,
 	GetCategories,
 	CreateCategoryDto,
-	CustomError
+	CustomError,
+	PaginationDto
 } from "../../domain";
 
 export class CategoryController {
@@ -34,6 +35,10 @@ export class CategoryController {
 	}
 
 	getCategories = (req: Request, res: Response) => {
+
+		const [error, paginationDto] = PaginationDto.create(req.query as {[key: string]: string})
+		if (error) return res.status(400).json({ error })
+
 		new GetCategories(this.repository)
 			.execute()
 			.then(categories => res.json(categories))
