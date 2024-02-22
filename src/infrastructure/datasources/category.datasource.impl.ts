@@ -31,7 +31,15 @@ export class CategoryDatasourceImpl implements CategoryDatasource {
 		}
 	}
 
-	async getAll(user: any) {
-		return []
+	async getAll() {
+
+		try {
+			const categories = await CategoryModel.find()
+
+			return categories.map((category) => Category.fromObject(category))
+
+		} catch (error) {
+			throw CustomError.internalServer()
+		}
 	}
 }

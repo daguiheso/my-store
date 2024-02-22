@@ -4,5 +4,5 @@ import { UserEntity } from "../entities/user.entity";
 
 export abstract class CategoryRepository {
 	abstract create(dto: CreateCategoryDto, user: UserEntity): Promise<Category>
-	abstract getAll(user: string): Promise<Category[]>
+	abstract getAll(): Promise<Category[]>
 }

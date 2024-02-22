@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
 	CategoryRepository,
 	CreateCategory,
+	GetCategories,
 	CreateCategoryDto,
 	CustomError
 } from "../../domain";
@@ -33,6 +34,9 @@ export class CategoryController {
 	}
 
 	getCategories = (req: Request, res: Response) => {
-		res.json('Categories')
+		new GetCategories(this.repository)
+			.execute()
+			.then(categories => res.json(categories))
+			.catch(error => this.handleError(error, res))
 	}
 }
