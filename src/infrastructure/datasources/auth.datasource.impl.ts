@@ -12,7 +12,7 @@ import {
 } from "../../domain";
 import { EmailService } from "../../presentation/services/email.service";
 
-export class MongoDatasource implements AuthDatasource {
+export class AuthDatasourceImpl implements AuthDatasource {
 
 	// DI
 	constructor(

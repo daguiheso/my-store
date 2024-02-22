@@ -2,7 +2,7 @@ import { envs } from './../../config/envs';
 import { Router } from 'express';
 import { AuthController } from './controller';
 import { EmailService } from '../services/email.service';
-import { MongoDatasource } from '../../infrastructure/datasources/mongo.datasource';
+import { AuthDatasourceImpl } from '../../infrastructure/datasources/auth.datasource.impl';
 import { AuthRepositoryImpl } from '../../infrastructure/repositories/auth.repository.impl';
 
 
@@ -19,7 +19,7 @@ import { AuthRepositoryImpl } from '../../infrastructure/repositories/auth.repos
 			envs.SEND_EMAIL
 		)
 
-		const authDatasource = new MongoDatasource(emailService)
+		const authDatasource = new AuthDatasourceImpl(emailService)
 		const authRepository = new AuthRepositoryImpl(authDatasource)
 
  		const controller = new AuthController(authRepository)

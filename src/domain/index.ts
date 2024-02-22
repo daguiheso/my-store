@@ -4,9 +4,10 @@ export * from './dtos/index'
 
 export * from './datasources/auth.datasource'
 export * from './repositories/auth.repository'
-
 export * from './interfaces/auth.interfaces'
 
-export * from './use-cases/auth/login-user'
-export * from './use-cases/auth/register-user'
-export * from './use-cases/auth/validate-email'
+export * from './use-cases/index'
+
+export * from './datasources/category.datasource'
+export * from './repositories/category.repository'
+export * from './entities/category.entity'

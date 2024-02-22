@@ -24,7 +24,7 @@ export class AuthMiddleware {
 			const user = await UserModel.findById(payload.id)
 			if (!user) res.status(400).json('Invalid Token - user')
 
-			req.body.user = UserEntity.fromObject(user!)
+			req.body.user = UserEntity.fromObject(user!).id
 
 			next()
 

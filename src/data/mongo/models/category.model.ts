@@ -4,7 +4,8 @@ const categorySchema = new mongoose.Schema({
 
 	name: {
 		type: String,
-		required: [true, 'name is required']
+		required: [true, 'name is required'],
+		unique: true
 	},
 	available: {
 		type: Boolean,
