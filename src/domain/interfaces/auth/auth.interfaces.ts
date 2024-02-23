@@ -1,4 +1,4 @@
-import { UserEntity } from ".."
+import { UserEntity } from "../.."
 
 export interface IUserResponse {
 	user: Omit<UserEntity, 'password'>

@@ -4,7 +4,8 @@ import {
 	CategoryDatasource,
 	UserEntity,
 	CustomError,
-	Category
+	Category,
+	PaginationDto
 } from "../../domain"
 
 export class CategoryDatasourceImpl implements CategoryDatasource {
@@ -31,12 +32,29 @@ export class CategoryDatasourceImpl implements CategoryDatasource {
 		}
 	}
 
-	async getAll() {
+	async getAll(dto: PaginationDto) {
+
+		const { page, limit } = dto.params
 
 		try {
-			const categories = await CategoryModel.find()
+			const [total, categories] = await Promise.all([
+				CategoryModel.countDocuments(),
+				CategoryModel.find()
+					.skip((page - 1) * limit)
+					.limit(limit)
+			])
 
-			return categories.map((category) => Category.fromObject(category))
+			const totalPages = Math.ceil(total / limit);
+    	const lastPage = page >= totalPages;
+
+			return {
+				data: categories.map((category) => Category.fromObject(category)),
+				page: page,
+				limit: limit,
+				total: total,
+				pages: totalPages,
+				last: lastPage,
+			}
 
 		} catch (error) {
 			throw CustomError.internalServer()

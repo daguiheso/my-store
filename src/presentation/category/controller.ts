@@ -35,12 +35,12 @@ export class CategoryController {
 	}
 
 	getCategories = (req: Request, res: Response) => {
-
-		const [error, paginationDto] = PaginationDto.create(req.query as {[key: string]: string})
+		const { page = 1, limit = 5 } = req.query
+		const [error, paginationDto] = PaginationDto.create({ page: +page, limit: +limit })
 		if (error) return res.status(400).json({ error })
 
 		new GetCategories(this.repository)
-			.execute()
+			.execute(paginationDto!)
 			.then(categories => res.json(categories))
 			.catch(error => this.handleError(error, res))
 	}

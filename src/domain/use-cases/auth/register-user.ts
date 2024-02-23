@@ -1,6 +1,6 @@
 import { RegisterUserDto } from "../../dtos"
 import { CustomError } from "../../errors/custom.error"
-import { IUserResponse } from "../../interfaces/auth.interfaces"
+import { IUserResponse } from "../../interfaces/auth/auth.interfaces"
 import { AuthRepository } from "../../repositories/auth.repository"
 
 interface RegisterUserUseCase {

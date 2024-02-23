@@ -4,7 +4,7 @@ export * from './dtos/index'
 
 export * from './datasources/auth.datasource'
 export * from './repositories/auth.repository'
-export * from './interfaces/auth.interfaces'
+export * from './interfaces/auth/auth.interfaces'
 
 export * from './use-cases/index'
 

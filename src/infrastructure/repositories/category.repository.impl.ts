@@ -2,6 +2,7 @@ import {
 	CategoryDatasource,
 	CategoryRepository,
 	CreateCategoryDto,
+	PaginationDto,
 	UserEntity
 } from "../../domain";
 
@@ -14,7 +15,7 @@ export class CategoryRepositoryImpl implements CategoryRepository {
 		return this.datasource.create(dto, user);
 	}
 
-	async getAll(user: string) {
-		return this.datasource.getAll(user);
+	async getAll(dto: PaginationDto) {
+		return this.datasource.getAll(dto);
 	}
 }

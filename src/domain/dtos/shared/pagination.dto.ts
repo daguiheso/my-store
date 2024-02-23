@@ -1,18 +1,17 @@
 export class PaginationDto {
 
 	private constructor(
-		public readonly query: {[key: string]: string},
+		public readonly params: {page: number, limit: number},
 	) { }
 
-	static create(query: {[key: string]: string}): [string?, PaginationDto?] {
-		const page = +query.page
-		const limit = +query.limit
+	static create(params: {page: number, limit: number}): [string?, PaginationDto?] {
+		const { page, limit } = params
 
 		if (isNaN(page) || isNaN(limit)) return ['Invalid number param'];
 
 		if (page <= 0) return ['Invalid page']
 		if (limit <= 0 || limit >= 50) return ['Invalid limit']
 
-		return [undefined, new PaginationDto(query)];
+		return [undefined, new PaginationDto(params)];
 	}
 }

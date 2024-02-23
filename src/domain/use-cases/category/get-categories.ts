@@ -1,9 +1,11 @@
+import { PaginationDto } from "../../dtos"
 import { Category } from "../../entities/category.entity"
 import { CustomError } from "../../errors/custom.error"
+import { IApiListResponse } from "../../interfaces/shared/api.interface"
 import { CategoryRepository } from "../../repositories/category.repository"
 
 interface GetCategoriesUseCase {
-	execute(): Promise<Category[] |CustomError>
+	execute(dto: PaginationDto): Promise<IApiListResponse<Category[]> |CustomError>
 }
 
 export class GetCategories implements GetCategoriesUseCase {
@@ -12,8 +14,8 @@ export class GetCategories implements GetCategoriesUseCase {
 		private readonly repository: CategoryRepository
 	) {}
 
-	async execute(): Promise<Category[] | CustomError> {
-		return this.repository.getAll()
+	async execute(dto: PaginationDto): Promise<IApiListResponse<Category[]> | CustomError> {
+		return this.repository.getAll(dto)
 	}
 
 }
