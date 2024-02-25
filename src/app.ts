@@ -1,7 +1,7 @@
 import { envs } from './config/envs';
-import { MongoDatabase } from './data';
-import { AppRoutes } from './presentation/routes';
-import { Server } from './presentation/server';
+import { MongoDatabase } from './adapters/databases/nosql/mongo';
+import { AppRoutes } from './entryPoints/routes';
+import { Server } from './entryPoints/server';
 
 
 (async()=> {

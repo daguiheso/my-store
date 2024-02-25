@@ -1,7 +1,7 @@
 import { bcryptAdpater } from "../../config/bcrypt.adapter";
 import { envs } from "../../config/envs";
 import { JwtAdapter } from "../../config/jwt.adapter";
-import { UserModel } from "../../data";
+import { UserModel } from "../databases/nosql/mongo";
 import {
 	AuthDatasource,
 	CustomError,
@@ -10,7 +10,7 @@ import {
 	RegisterUserDto,
 	UserEntity
 } from "../../domain";
-import { EmailService } from "../../presentation/services/email.service";
+import { EmailService } from "../../entryPoints/services/email.service";
 
 export class AuthDatasourceImpl implements AuthDatasource {
 

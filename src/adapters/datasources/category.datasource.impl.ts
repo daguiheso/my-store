@@ -1,4 +1,4 @@
-import { CategoryModel } from "../../data"
+import { CategoryModel } from "../databases/nosql/mongo"
 import {
 	CreateCategoryDto,
 	CategoryDatasource,

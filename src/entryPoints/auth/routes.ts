@@ -1,9 +1,9 @@
-import { envs } from './../../config/envs';
+import { envs } from '../../config/envs';
 import { Router } from 'express';
 import { AuthController } from './controller';
 import { EmailService } from '../services/email.service';
-import { AuthDatasourceImpl } from '../../infrastructure/datasources/auth.datasource.impl';
-import { AuthRepositoryImpl } from '../../infrastructure/repositories/auth.repository.impl';
+import { AuthDatasourceImpl } from '../../adapters/datasources/auth.datasource.impl';
+import { AuthRepositoryImpl } from '../../adapters/repositories/auth.repository.impl';
 
 
  export class AuthRoutes {

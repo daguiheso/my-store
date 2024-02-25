@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { UserEntity } from "../../domain";
 import { JwtAdapter } from "../../config/jwt.adapter";
-import { UserModel } from "../../data";
+import { UserModel } from "../../adapters/databases/nosql/mongo";
 
 export class AuthMiddleware {
 

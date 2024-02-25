@@ -1,4 +1,4 @@
-import { UserModel } from "../../data";
+import { UserModel } from "../../adapters/databases/nosql/mongo";
 import { CustomError, LoginUserDto, RegisterUserDto, UserEntity } from "../../domain";
 import { bcryptAdpater } from '../../config/bcrypt.adapter';
 import { JwtAdapter } from "../../config/jwt.adapter";

@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { CategoryController } from "./controller";
 import { AuthMiddleware } from "../middlewares/auth.middleware";
-import { CategoryDatasourceImpl } from "../../infrastructure/datasources/category.datasource.impl";
-import { CategoryRepositoryImpl } from "../../infrastructure/repositories/category.repository.impl";
+import { CategoryDatasourceImpl } from "../../adapters/datasources/category.datasource.impl";
+import { CategoryRepositoryImpl } from "../../adapters/repositories/category.repository.impl";
 
 export class CategoryRoutes {
 
