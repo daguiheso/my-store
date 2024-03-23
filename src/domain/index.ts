@@ -11,3 +11,7 @@ export * from './use-cases/index'
 export * from './datasources/category.datasource'
 export * from './repositories/category.repository'
 export * from './entities/category.entity'
+
+export * from './datasources/product.datasource'
+export * from './repositories/product.repository'
+export * from './entities/product.entity'

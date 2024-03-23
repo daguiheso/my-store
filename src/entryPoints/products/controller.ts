@@ -1,18 +1,11 @@
+import { CreateProduct, CreateProductDto, CustomError, PaginationDto, ProductRepository } from "../../domain"
 import { Request, Response } from "express";
+import { GetProducts } from "../../domain/use-cases/product/get-products";
 
-import {
-	CategoryRepository,
-	CreateCategory,
-	GetCategories,
-	CreateCategoryDto,
-	CustomError,
-	PaginationDto
-} from "../../domain";
-
-export class CategoryController {
+export class ProductController {
 
 	constructor(
-		private readonly repository: CategoryRepository
+		private readonly repository: ProductRepository
 	) { }
 
 	private handleError = (error: unknown, res: Response) => {
@@ -24,25 +17,25 @@ export class CategoryController {
 		return res.status(500).json({ error: 'Internal server error' })
 	}
 
-	createCategory = (req: Request, res: Response) => {
+	createProduct = (req: Request, res: Response) => {
 
-		const [error, createCategoryDto] = CreateCategoryDto.create(req.body)
+		const [error, createProductDto] = CreateProductDto.create(req.body)
 		if (error) return res.status(400).json({ error })
 
-		new CreateCategory(this.repository)
-			.execute(createCategoryDto!, req.body.user)
-			.then(category => res.status(201).json(category))
+		new CreateProduct(this.repository)
+			.execute(createProductDto!)
+			.then(product => res.status(201).json(product))
 			.catch(error => this.handleError(error, res))
 	}
 
-	getCategories = (req: Request, res: Response) => {
+	getProducts = (req: Request, res: Response) => {
 		const { page = 1, limit = 5 } = req.query
 		const [error, paginationDto] = PaginationDto.create({ page: +page, limit: +limit })
 		if (error) return res.status(400).json({ error })
 
-		new GetCategories(this.repository)
+		new GetProducts(this.repository)
 			.execute(paginationDto!)
-			.then(categories => res.json(categories))
+			.then(products => res.json(products))
 			.catch(error => this.handleError(error, res))
 	}
 }
