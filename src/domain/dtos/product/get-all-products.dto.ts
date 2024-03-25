@@ -1,16 +1,18 @@
 import { Validators } from "../../../config/validators";
+import { Category } from "../../entities/category.entity";
+import { UserEntity } from "../../entities/user.entity";
 
-export class CreateProductDto {
+export class GetAllProductsDto {
 	private constructor(
 		public readonly name: string,
 		public readonly price: number,
 		public readonly description: string,
 		public readonly available: boolean,
-		public readonly user: string,
-		public readonly category: string,
+		public readonly user: Omit<UserEntity, 'password'>,
+		public readonly category: Category,
 	) { }
 
-	static create(object: {[key: string]: any}): [string?, CreateProductDto?] {
+	static create(object: {[key: string]: any}): [string?, GetAllProductsDto?] {
 		const {
 			name,
 			price,
@@ -25,16 +27,16 @@ export class CreateProductDto {
 		if (!description) return ['Missing description'];
 
 		if (!user) return ['Missing user'];
-		if (!Validators.isMondoDBId(user)) return ['Invalid user'];
+		if (!Validators.isMondoDBId(user.id)) return ['Invalid user'];
 
 		if (!category) return ['Missing category'];
-		if (!Validators.isMondoDBId(category)) return ['Invalid category'];
+		if (!Validators.isMondoDBId(category.id)) return ['Invalid category'];
 
 		return [
 			undefined,
-			new CreateProductDto(
+			new GetAllProductsDto(
 				name,
-				price,
+				price.toString(),
 				description,
 				available,
 				user,

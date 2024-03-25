@@ -1,5 +1,6 @@
 import { CreateProductDto, CustomError, PaginationDto } from "../../domain";
 import { ProductDatasource } from "../../domain/datasources/product.datasource";
+import { GetAllProductsDto } from "../../domain/dtos/product/get-all-products.dto";
 import { ProductEntity } from "../../domain/entities/product.entity";
 import { IApiListResponse } from "../../domain/interfaces/shared/api.interface";
 import { ProductModel } from "../databases/nosql/mongo";
@@ -24,7 +25,7 @@ export class ProductDatasourceImpl implements ProductDatasource {
 
 	}
 
-	async getAll(dto: PaginationDto): Promise<IApiListResponse<ProductEntity[]>> {
+	async getAll(dto: PaginationDto): Promise<IApiListResponse<GetAllProductsDto[]>> {
 
 		const { page, limit } = dto.params
 
@@ -34,14 +35,20 @@ export class ProductDatasourceImpl implements ProductDatasource {
 				ProductModel.find()
 					.skip((page - 1) * limit)
 					.limit(limit)
-				// TODO: populate
+					.populate('user')
+					.populate('category')
 			])
 
 			const totalPages = Math.ceil(total / limit);
     	const lastPage = page >= totalPages;
 
 			return {
-				data: products.map((product) => ProductEntity.fromObject(product)),
+				data: products.map((product) => {
+					const [error, getAllProductsDto] = GetAllProductsDto.create(product)
+					if (error) throw CustomError.internalServer()
+
+					return getAllProductsDto!
+				}),
 				page: page,
 				limit: limit,
 				total: total,

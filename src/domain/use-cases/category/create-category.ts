@@ -5,7 +5,7 @@ import { CustomError } from "../../errors/custom.error"
 import { CategoryRepository } from "../../repositories/category.repository"
 
 interface CreateCategoryUseCase {
-	execute(dto: CreateCategoryDto, user: UserEntity): Promise<Category |CustomError>
+	execute(dto: CreateCategoryDto): Promise<Category |CustomError>
 }
 
 export class CreateCategory implements CreateCategoryUseCase {
@@ -14,7 +14,7 @@ export class CreateCategory implements CreateCategoryUseCase {
 		private readonly repository: CategoryRepository
 	) {}
 
-	async execute(dto: CreateCategoryDto, user: UserEntity): Promise<Category |CustomError> {
-		return this.repository.create(dto, user)
+	async execute(dto: CreateCategoryDto): Promise<Category |CustomError> {
+		return this.repository.create(dto)
 	}
 }

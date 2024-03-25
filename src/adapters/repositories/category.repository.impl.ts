@@ -11,8 +11,8 @@ export class CategoryRepositoryImpl implements CategoryRepository {
 		private readonly datasource: CategoryDatasource
 	) { }
 
-	async create(dto: CreateCategoryDto, user: UserEntity) {
-		return this.datasource.create(dto, user);
+	async create(dto: CreateCategoryDto) {
+		return this.datasource.create(dto);
 	}
 
 	async getAll(dto: PaginationDto) {

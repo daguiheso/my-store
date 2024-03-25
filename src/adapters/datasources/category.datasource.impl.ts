@@ -12,16 +12,13 @@ export class CategoryDatasourceImpl implements CategoryDatasource {
 
 	constructor() { }
 
-	async create(dto: CreateCategoryDto, user: UserEntity): Promise<Category> {
+	async create(dto: CreateCategoryDto): Promise<Category> {
 
 		const categoryExist = await CategoryModel.findOne({ name: dto.name })
 		if (categoryExist) throw CustomError.badRequest('Category already exist')
 
 		try {
-			const category = new CategoryModel({
-				...dto,
-				user: user.id
-			})
+			const category = new CategoryModel(dto)
 
 			await category.save()
 

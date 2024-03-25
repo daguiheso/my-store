@@ -1,3 +1,4 @@
+import { Console } from "console"
 import { CustomError } from "../errors/custom.error"
 
 export class ProductEntity {
@@ -12,8 +13,17 @@ export class ProductEntity {
 		public category: string,
 	) { }
 
-	static fromObject(object: {[key:string]: any}) {
-		const { id, _id, name, price, description, available, user, category } = object
+	static fromObject(object: { [key: string]: any }) {
+		const {
+			id,
+			_id,
+			name,
+			price,
+			description,
+			available,
+			user,
+			category
+		} = object
 
 		if (!_id && !id) throw CustomError.badRequest('Missing id')
 
@@ -23,8 +33,6 @@ export class ProductEntity {
 
 		if (!description) throw CustomError.badRequest('Missing description')
 
-		if (!available) throw CustomError.badRequest('Missing available field')
-
 		if (!user) throw CustomError.badRequest('Missing user field')
 
 		if (!category) throw CustomError.badRequest('Missing category field')
@@ -32,7 +40,7 @@ export class ProductEntity {
 		return new ProductEntity(
 			_id || id,
 			name,
-			price,
+			price.toString(),
 			description,
 			available,
 			user,

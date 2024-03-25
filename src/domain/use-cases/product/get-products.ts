@@ -1,11 +1,11 @@
 import { PaginationDto } from "../../dtos"
-import { ProductEntity } from "../../entities/product.entity"
+import { GetAllProductsDto } from "../../dtos/product/get-all-products.dto"
 import { CustomError } from "../../errors/custom.error"
 import { IApiListResponse } from "../../interfaces/shared/api.interface"
 import { ProductRepository } from "../../repositories/product.repository"
 
 interface GetProductsUseCase {
-	execute(dto: PaginationDto): Promise<IApiListResponse<ProductEntity[]> |CustomError>
+	execute(dto: PaginationDto): Promise<IApiListResponse<GetAllProductsDto[]> |CustomError>
 }
 
 export class GetProducts implements GetProductsUseCase {
@@ -14,7 +14,7 @@ export class GetProducts implements GetProductsUseCase {
 		private readonly repository: ProductRepository
 	) {}
 
-	async execute(dto: PaginationDto): Promise<IApiListResponse<ProductEntity[]> | CustomError> {
+	async execute(dto: PaginationDto): Promise<IApiListResponse<GetAllProductsDto[]> | CustomError> {
 		return this.repository.getAll(dto)
 	}
 
